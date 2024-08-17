@@ -4,6 +4,7 @@ import { Container, Typography, Dialog, DialogTitle, DialogContent, DialogAction
 import Task from './components/Task';
 import TaskForm from './components/TaskForm';
 import useTasks from './hooks/useTasks';
+import { Task as TaskType } from './types';
 
 const AppContainer = styled(Container)`
   ${tw`py-8`}
@@ -14,11 +15,11 @@ const TaskList = styled.div`
 `;
 
 const App: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask, loading } = useTasks();
+  const { tasks, addTask, updateTask, deleteTask } = useTasks(); 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentTask, setCurrentTask] = useState<Partial<Task> | null>(null);
+  const [currentTask, setCurrentTask] = useState<Partial<TaskType> | null>(null);
 
-  const handleOpenModal = (task?: Partial<Task>) => {
+  const handleOpenModal = (task?: Partial<TaskType>) => {
     setCurrentTask(task || { title: '', description: '', completed: false });
     setIsModalOpen(true);
   };
