@@ -1,27 +1,28 @@
-import React from 'react'
-import tw, { styled } from 'twin.macro'
-import { Card, CardContent, Typography, IconButton } from '@mui/material'
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
+import React from 'react';
+import tw, { styled } from 'twin.macro';
+import { Card, CardContent, Typography, IconButton } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 
 const TaskCard = styled(Card)`
   ${tw`bg-opacity-20 backdrop-filter backdrop-blur-lg border border-neonPurple`}
   background-color: rgba(176, 38, 255, 0.1);
-`
+`;
 
 const TaskContent = styled(CardContent)`
   ${tw`flex justify-between items-center`}
-`
+`;
 
 interface TaskProps {
-  id: string
-  title: string
-  description: string
-  completed: boolean
-  onEdit: (id: string) => void
-  onDelete: (id: string) => void
+  id: string;
+  title: string;
+  description: string;
+  completed: boolean;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+  onUpdateStatus: (id: string, completed: boolean) => void;
 }
 
-const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, onDelete }) => {
+const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, onDelete, onUpdateStatus }) => {
   return (
     <TaskCard>
       <TaskContent>
@@ -40,13 +41,16 @@ const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, 
           <IconButton onClick={() => onEdit(id)} css={tw`text-neonPurple`}>
             <EditIcon />
           </IconButton>
+          <IconButton onClick={() => onUpdateStatus(id, !completed)} css={tw`text-blue-500`}>
+            {completed ? 'Mark as Pending' : 'Mark as Completed'}
+          </IconButton>
           <IconButton onClick={() => onDelete(id)} css={tw`text-red-500`}>
             <DeleteIcon />
           </IconButton>
         </div>
       </TaskContent>
     </TaskCard>
-  )
-}
+  );
+};
 
-export default Task
+export default Task;

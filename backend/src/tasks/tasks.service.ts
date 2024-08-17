@@ -5,7 +5,7 @@ import { Task } from './models/task.model';
 
 @Injectable()
 export class TasksService {
-  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
+  constructor(@InjectModel('Task') private taskModel: Model<Task>) {}
 
   async findAll(): Promise<Task[]> {
     return this.taskModel.find().exec();
