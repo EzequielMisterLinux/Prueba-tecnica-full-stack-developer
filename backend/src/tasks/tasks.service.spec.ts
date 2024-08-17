@@ -1,18 +1,26 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { TasksService } from './tasks.service';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Task } from './models/task.model';
 
-describe('TasksService', () => {
-  let service: TasksService;
+@Injectable()
+export class TasksService {
+  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [TasksService],
-    }).compile();
+  async findAll(): Promise<Task[]> {
+    return this.taskModel.find().exec();
+  }
 
-    service = module.get<TasksService>(TasksService);
-  });
+  async create(task: Partial<Task>): Promise<Task> {
+    const newTask = new this.taskModel(task);
+    return newTask.save();
+  }
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+  async update(id: string, task: Partial<Task>): Promise<Task> {
+    return this.taskModel.findByIdAndUpdate(id, task, { new: true }).exec();
+  }
+
+  async delete(id: string): Promise<Task> {
+    return this.taskModel.findByIdAndDelete(id).exec();
+  }
+}

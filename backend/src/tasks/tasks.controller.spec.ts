@@ -1,18 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { TasksController } from './tasks.controller';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { TasksService } from './tasks.service';
+import { Task } from './tasks.controller';
 
-describe('TasksController', () => {
-  let controller: TasksController;
+@Controller('tasks')
+export class TasksController {
+  constructor(private readonly tasksService: TasksService) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [TasksController],
-    }).compile();
+  @Get()
+  async findAll(): Promise<Task[]> {
+    return this.tasksService.findAll();
+  }
 
-    controller = module.get<TasksController>(TasksController);
-  });
+  @Post()
+  async create(@Body() task: Partial<Task>): Promise<Task> {
+    return this.tasksService.create(task);
+  }
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() task: Partial<Task>): Promise<Task> {
+    return this.tasksService.update(id, task);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<Task> {
+    return this.tasksService.delete(id);
+  }
+}
