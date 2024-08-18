@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-import tw, { styled } from 'twin.macro';
-import { Container, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
-import Task from './components/Task';
-import TaskForm from './components/TaskForm';
+import { Container, Typography, Button } from '@mui/material';
+import TaskList from './components/TaskList';
+import TaskModal from './modals/TaskModal';
 import useTasks from './hooks/useTasks';
-import { Task as TaskType } from './types';
+import { Task as TaskType } from './types/types';
+import tw from 'twin.macro';
 
-const AppContainer = styled(Container)`
-  ${tw`py-8`}
-`;
-
-const TaskList = styled.div`
-  ${tw`space-y-4`}
-`;
+const AppContainer = tw(Container)`py-8`;
 
 const App: React.FC = () => {
-  const { tasks, addTask, updateTask, deleteTask } = useTasks(); 
+  const { tasks, addTask, updateTask, deleteTask } = useTasks();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState<Partial<TaskType> | null>(null);
 
-  const handleOpenModal = (task?: Partial<TaskType>) => {
-    setCurrentTask(task || { title: '', description: '', completed: false });
+  const handleOpenModal = (id?: string) => {
+    if (id) {
+      const task = tasks.find(task => task._id === id);
+      if (task) setCurrentTask(task);
+    } else {
+      setCurrentTask({ title: '', description: '', completed: false });
+    }
     setIsModalOpen(true);
   };
 
@@ -38,6 +37,10 @@ const App: React.FC = () => {
     handleCloseModal();
   };
 
+  const handleUpdateStatus = async (id: string, completed: boolean) => {
+    await updateTask(id, { completed });
+  };
+
   return (
     <AppContainer maxWidth="md">
       <Typography variant="h3" css={tw`text-neonPurple mb-8 text-center`}>
@@ -46,36 +49,8 @@ const App: React.FC = () => {
       <Button onClick={() => handleOpenModal()} variant="contained" css={tw`bg-neonPurple hover:bg-purple-700`}>
         Add Task
       </Button>
-      <TaskList>
-        {tasks.map((task) => (
-          <Task
-            key={task._id}
-            id={task._id}
-            title={task.title}
-            description={task.description}
-            completed={task.completed}
-            onEdit={(id) => handleOpenModal(tasks.find(task => task._id === id))}
-            onUpdateStatus={async (id, completed) => await updateTask(id, { completed })}
-            onDelete={deleteTask}
-          />
-        ))}
-      </TaskList>
-
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>{currentTask?._id ? 'Edit Task' : 'Add Task'}</DialogTitle>
-        <DialogContent>
-          <TaskForm
-            onSubmit={handleUpdateTask}
-            initialTitle={currentTask?.title || ''}
-            initialDescription={currentTask?.description || ''}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <TaskList tasks={tasks} onEdit={handleOpenModal} onDelete={deleteTask} onUpdateStatus={handleUpdateStatus} />
+      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleUpdateTask} task={currentTask || undefined} />
     </AppContainer>
   );
 };

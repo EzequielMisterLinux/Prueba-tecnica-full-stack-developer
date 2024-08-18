@@ -1,39 +1,37 @@
-import React, { useState } from 'react';
-import tw, { styled } from 'twin.macro';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
+import { FormContainer } from '../styles/FormStyles';
 import Swal from 'sweetalert2';
-
-const FormContainer = styled.form`
-  ${tw`space-y-4 mb-8`}
-`;
 
 interface TaskFormProps {
   onSubmit: (title: string, description: string) => void;
   initialTitle?: string;
   initialDescription?: string;
+  isEditing?: boolean;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle = '', initialDescription = '' }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle = '', initialDescription = '', isEditing = false }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [errors, setErrors] = useState({ title: '', description: '' });
 
+  useEffect(() => {
+    setTitle(initialTitle);
+    setDescription(initialDescription);
+  }, [initialTitle, initialDescription]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let valid = true;
     const newErrors = { title: '', description: '' };
 
     if (!title.trim()) {
       newErrors.title = 'Title is required';
-      valid = false;
     }
-
     if (!description.trim()) {
       newErrors.description = 'Description is required';
-      valid = false;
     }
 
-    if (valid) {
+    if (!newErrors.title && !newErrors.description) {
       onSubmit(title, description);
       setTitle('');
       setDescription('');
@@ -50,7 +48,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle = '', initia
         label="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        css={tw`bg-opacity-20 backdrop-filter backdrop-blur-lg`}
         error={!!errors.title}
         helperText={errors.title}
       />
@@ -61,12 +58,11 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle = '', initia
         onChange={(e) => setDescription(e.target.value)}
         multiline
         rows={3}
-        css={tw`bg-opacity-20 backdrop-filter backdrop-blur-lg`}
         error={!!errors.description}
         helperText={errors.description}
       />
-      <Button type="submit" variant="contained" css={tw`bg-neonPurple hover:bg-purple-700`}>
-        Add Task
+      <Button type="submit" variant="contained">
+        {isEditing ? 'Update Task' : 'Add Task'}
       </Button>
     </FormContainer>
   );

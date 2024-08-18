@@ -1,16 +1,7 @@
 import React from 'react';
-import tw, { styled } from 'twin.macro';
-import { Card, CardContent, Typography, IconButton } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
-
-const TaskCard = styled(Card)`
-  ${tw`bg-opacity-20 backdrop-filter backdrop-blur-lg border border-neonPurple`}
-  background-color: rgba(176, 38, 255, 0.1);
-`;
-
-const TaskContent = styled(CardContent)`
-  ${tw`flex justify-between items-center`}
-`;
+import { TaskCard, TaskContent } from '../styles/TaskStyles';
 
 interface TaskProps {
   id: string;
@@ -22,35 +13,27 @@ interface TaskProps {
   onUpdateStatus: (id: string, completed: boolean) => void;
 }
 
-const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, onDelete, onUpdateStatus }) => {
-  return (
-    <TaskCard>
-      <TaskContent>
-        <div>
-          <Typography variant="h6" css={tw`text-neonPurple`}>
-            {title}
-          </Typography>
-          <Typography variant="body2" css={tw`text-gray-300`}>
-            {description}
-          </Typography>
-          <Typography variant="caption" css={tw`text-gray-400`}>
-            Status: {completed ? 'Completed' : 'Pending'}
-          </Typography>
-        </div>
-        <div>
-          <IconButton onClick={() => onEdit(id)} css={tw`text-neonPurple`}>
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={() => onUpdateStatus(id, !completed)} css={tw`text-blue-500`}>
-            {completed ? 'Mark as Pending' : 'Mark as Completed'}
-          </IconButton>
-          <IconButton onClick={() => onDelete(id)} css={tw`text-red-500`}>
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      </TaskContent>
-    </TaskCard>
-  );
-};
+const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, onDelete, onUpdateStatus }) => (
+  <TaskCard>
+    <TaskContent>
+      <div>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="body2">{description}</Typography>
+        <Typography variant="caption">Status: {completed ? 'Completed' : 'Pending'}</Typography>
+      </div>
+      <div>
+        <IconButton onClick={() => onEdit(id)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={() => onUpdateStatus(id, !completed)}>
+          {completed ? 'Mark as Pending' : 'Mark as Completed'}
+        </IconButton>
+        <IconButton onClick={() => onDelete(id)}>
+          <DeleteIcon />
+        </IconButton>
+      </div>
+    </TaskContent>
+  </TaskCard>
+);
 
 export default Task;

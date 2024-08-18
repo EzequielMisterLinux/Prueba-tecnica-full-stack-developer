@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { fetchTasks as fetchTasksApi, addTask as addTaskApi, updateTask as updateTaskApi, deleteTask as deleteTaskApi } from '../api/tasksApi';
-import { Task } from '../types';  
+import { Task } from '../types/types';  
 
 const useTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
