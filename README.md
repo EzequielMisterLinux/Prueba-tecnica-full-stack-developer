@@ -13,7 +13,6 @@ Este proyecto es un sistema de gestión de tareas Full Stack que utiliza tecnolo
 4. [Documentación de la API](#documentación-de-la-api)
 5. [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 6. [Deploy](#deploy)
-7. [Contribuciones](#contribuciones)
 
 ## Tecnologías Utilizadas
 
@@ -34,6 +33,11 @@ Antes de iniciar los contenedores de Docker, asegúrate de que los siguientes pu
 Si alguno de estos puertos ya está en uso, detén los servicios correspondientes para evitar conflictos.
 
 ## Uso de la Aplicación
+
+  **primero clone el proyecto:**
+  ```bash
+   git clone https://github.com/EzequielMisterLinux/Prueba-tecnica-full-stack-developer.git
+  ```
 
 ### Uso con Docker
 
@@ -143,6 +147,7 @@ Este proyecto utiliza Swagger (OAS 3.0) para documentar la API REST. La document
 
 Accede al siguiente URL para probar la API con Swagger:
 
+Atención para usar el siguiente link la aplicación ya debe estar funcionando
 [Probar API con Swagger](http://localhost:3000/api-docs)
 
 Cada endpoint está documentado detalladamente, incluyendo parámetros, tipos de respuesta y ejemplos de uso.
