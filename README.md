@@ -1,6 +1,5 @@
 
----
-
+```markdown
 # Task Management System - Full Stack Developer
 
 Este proyecto consiste en un sistema de gestión de tareas Full Stack, utilizando tecnologías modernas y contenedores Docker para facilitar la implementación y escalabilidad. A continuación, encontrarás una guía detallada sobre cómo usar, configurar y desplegar la aplicación, así como la documentación de la API con Swagger.
@@ -53,8 +52,51 @@ Si alguno de estos puertos ya está en uso, detén los servicios correspondiente
 
 3. **Opcional:** Descargar la imagen pre-construida:
 
+    Si prefieres usar las imágenes pre-construidas disponibles en Docker Hub, crea el siguiente archivo `docker-compose.yml`:
+
+    ```yaml
+    version: '3'
+    services:
+      api:
+        image: ezequielcampos520/full-stack-backend-container:latest
+        ports:
+          - "3000:3000"
+        environment:
+          - MONGO=mongodb://mongo:27017/taskmanagement
+          - PORT=3000
+          - HOST=0.0.0.0 
+        depends_on:
+          - mongo
+
+      frontend:
+        image: ezequielcampos520/full-stack-frontend-container:latest
+        ports:
+          - "8080:80"
+        environment:
+          - VITE_BACKEND_URL=http://api:3000/tasks 
+
+      mongo:
+        image: mongo:latest
+        ports:
+          - "27017:27017"
+        volumes:
+          - mongo-data:/data/db
+
+    volumes:
+      mongo-data:
+    ```
+
+    Luego, descarga las imágenes:
+
     ```bash
-    docker pull <pendiente xd>
+    docker pull ezequielcampos520/full-stack-backend-container:latest
+    docker pull ezequielcampos520/full-stack-frontend-container:latest
+    ```
+
+    Y finalmente, inicia los contenedores:
+
+    ```bash
+    docker-compose up
     ```
 
 ### Uso con Node y NPM
@@ -106,7 +148,6 @@ acceda al siguiente url para probar la api:
 
 Cada endpoint está documentado detalladamente, incluyendo parámetros, tipos de respuesta, y ejemplos de uso.
 
-
 ## Arquitectura del Proyecto
 
 ### Backend
@@ -152,6 +193,5 @@ docker-compose up
 ```
 
 Nginx se encarga de servir el frontend en producción, mientras que Node.js y MongoDB están dockerizados para una fácil administración.
-
 
 ---
