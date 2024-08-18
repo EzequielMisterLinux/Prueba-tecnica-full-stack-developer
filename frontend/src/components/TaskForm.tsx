@@ -1,70 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
-import { FormContainer } from '../styles/FormStyles';
-import Swal from 'sweetalert2';
 
 interface TaskFormProps {
   onSubmit: (title: string, description: string) => void;
-  initialTitle?: string;
-  initialDescription?: string;
-  isEditing?: boolean;
+  initialTitle: string;
+  initialDescription: string;
+  isEditing: boolean;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle = '', initialDescription = '', isEditing = false }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, initialTitle, initialDescription, isEditing }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
-  const [errors, setErrors] = useState({ title: '', description: '' });
 
-  useEffect(() => {
-    setTitle(initialTitle);
-    setDescription(initialDescription);
-  }, [initialTitle, initialDescription]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newErrors = { title: '', description: '' };
-
-    if (!title.trim()) {
-      newErrors.title = 'Title is required';
-    }
-    if (!description.trim()) {
-      newErrors.description = 'Description is required';
-    }
-
-    if (!newErrors.title && !newErrors.description) {
-      onSubmit(title, description);
-      setTitle('');
-      setDescription('');
-    } else {
-      setErrors(newErrors);
-      Swal.fire('Validation Error', 'Please fill out all fields correctly.', 'error');
-    }
+  const handleSubmit = () => {
+    onSubmit(title, description);
   };
 
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <div className="space-y-4 p-4">
       <TextField
-        fullWidth
+        autoFocus
+        margin="dense"
         label="Title"
+        fullWidth
+        variant="outlined"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        error={!!errors.title}
-        helperText={errors.title}
+        className="bg-gray-800 text-white"
       />
       <TextField
-        fullWidth
+        margin="dense"
         label="Description"
+        fullWidth
+        variant="outlined"
+        multiline
+        rows={4}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        multiline
-        rows={3}
-        error={!!errors.description}
-        helperText={errors.description}
+        className="bg-gray-800 text-white"
       />
-      <Button type="submit" variant="contained">
-        {isEditing ? 'Update Task' : 'Add Task'}
+      <Button onClick={handleSubmit} color="primary" className="bg-neonPurple hover:bg-purple-700">
+        {isEditing ? 'Update' : 'Add'}
       </Button>
-    </FormContainer>
+    </div>
   );
 };
 

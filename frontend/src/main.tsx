@@ -4,6 +4,8 @@ import { Global } from '@emotion/react'
 import { GlobalStyles as TwinGlobalStyles } from 'twin.macro'
 import App from './App'
 import globalStyles from './styles/globalStyles'
+import './styles/global.css'
+import './i18n'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
