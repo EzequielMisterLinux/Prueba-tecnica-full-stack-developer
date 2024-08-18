@@ -16,6 +16,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode, toggleLanguage }
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
+  //return xd
   return (
     <AppBar position="static">
       <Toolbar>
