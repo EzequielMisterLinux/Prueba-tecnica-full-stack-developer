@@ -100,6 +100,10 @@ Este proyecto utiliza Swagger (OAS 3.0) para documentar la API REST. La document
 3. **PUT /tasks/:id** - Actualiza una tarea existente por ID
 4. **DELETE /tasks/:id** - Elimina una tarea por ID
 
+acceda al siguiente url para probar la api:
+
+[Probar api con swagger](http://localhost:3000/api-docs)
+
 Cada endpoint está documentado detalladamente, incluyendo parámetros, tipos de respuesta, y ejemplos de uso.
 
 
