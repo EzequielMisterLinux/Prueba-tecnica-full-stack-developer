@@ -1,16 +1,15 @@
 
-```markdown
 # Task Management System - Full Stack Developer
 
-Este proyecto consiste en un sistema de gestión de tareas Full Stack, utilizando tecnologías modernas y contenedores Docker para facilitar la implementación y escalabilidad. A continuación, encontrarás una guía detallada sobre cómo usar, configurar y desplegar la aplicación, así como la documentación de la API con Swagger.
+Este proyecto es un sistema de gestión de tareas Full Stack que utiliza tecnologías modernas y contenedores Docker para facilitar la implementación y escalabilidad. A continuación, encontrarás una guía detallada sobre cómo usar, configurar y desplegar la aplicación, así como la documentación de la API con Swagger.
 
 ## Tabla de Contenidos
 
 1. [Tecnologías Utilizadas](#tecnologías-utilizadas)
 2. [Pre-requisitos](#pre-requisitos)
 3. [Uso de la Aplicación](#uso-de-la-aplicación)
-   - [Docker](#uso-con-docker)
-   - [Node y NPM](#uso-con-node-y-npm)
+   - [Uso con Docker](#uso-con-docker)
+   - [Uso con Node y NPM](#uso-con-node-y-npm)
 4. [Documentación de la API](#documentación-de-la-api)
 5. [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 6. [Deploy](#deploy)
@@ -50,9 +49,9 @@ Si alguno de estos puertos ya está en uso, detén los servicios correspondiente
     docker-compose up
     ```
 
-3. **Opcional:** Descargar la imagen pre-construida:
+3. **Opcional:** Descargar las imágenes pre-construidas:
 
-    Si prefieres usar las imágenes pre-construidas disponibles en Docker Hub, crea el siguiente archivo `docker-compose.yml`:
+    Si prefieres usar las imágenes pre-construidas disponibles en Docker Hub, utiliza el siguiente archivo `docker-compose.yml`:
 
     ```yaml
     version: '3'
@@ -103,7 +102,7 @@ Si alguno de estos puertos ya está en uso, detén los servicios correspondiente
 
 Si prefieres ejecutar la aplicación sin Docker, sigue estos pasos:
 
-1. Inicia el backend:
+1. **Iniciar el backend:**
 
     ```bash
     cd backend
@@ -111,7 +110,7 @@ Si prefieres ejecutar la aplicación sin Docker, sigue estos pasos:
     npm start
     ```
 
-2. Inicia el frontend:
+2. **Iniciar el frontend:**
 
     ```bash
     cd frontend
@@ -142,11 +141,11 @@ Este proyecto utiliza Swagger (OAS 3.0) para documentar la API REST. La document
 3. **PUT /tasks/:id** - Actualiza una tarea existente por ID
 4. **DELETE /tasks/:id** - Elimina una tarea por ID
 
-acceda al siguiente url para probar la api:
+Accede al siguiente URL para probar la API con Swagger:
 
-[Probar api con swagger](http://localhost:3000/api-docs)
+[Probar API con Swagger](http://localhost:3000/api-docs)
 
-Cada endpoint está documentado detalladamente, incluyendo parámetros, tipos de respuesta, y ejemplos de uso.
+Cada endpoint está documentado detalladamente, incluyendo parámetros, tipos de respuesta y ejemplos de uso.
 
 ## Arquitectura del Proyecto
 
@@ -184,9 +183,9 @@ fullstack/frontend/src
 
 ## Deploy
 
-📦 Despliegue con Docker Compose
+📦 **Despliegue con Docker Compose**
 
-El proyecto utiliza Docker Compose para orquestar y desplegar los contenedores de frontend, backend, y base de datos de manera automatizada. Esto asegura un entorno consistente y fácil de gestionar.
+El proyecto utiliza Docker Compose para orquestar y desplegar los contenedores de frontend, backend y base de datos de manera automatizada. Esto asegura un entorno consistente y fácil de gestionar.
 
 ```bash
 docker-compose up
@@ -195,3 +194,4 @@ docker-compose up
 Nginx se encarga de servir el frontend en producción, mientras que Node.js y MongoDB están dockerizados para una fácil administración.
 
 ---
+
