@@ -39,6 +39,18 @@ Si alguno de estos puertos ya está en uso, detén los servicios correspondiente
    git clone https://github.com/EzequielMisterLinux/Prueba-tecnica-full-stack-developer.git
   ```
 
+  **Cree un .env en la raiz de backend y otro en la raiz de frontend**
+  ```bash
+      #backend:
+      MONGO = mongodb://localhost:27017/taskmanagement
+      PORT=3000
+      HOST=localhost
+
+      #frontend:
+      VITE_BACKEND_URL=http://localhost:3000/tasks
+  ```
+
+
 ### Uso con Docker
 
 1. **Construir los contenedores:**
