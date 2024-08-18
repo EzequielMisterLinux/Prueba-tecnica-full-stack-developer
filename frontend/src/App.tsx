@@ -76,13 +76,14 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md" className="py-8">
+      <Container maxWidth="md" className="py-8 m-6">
         <CssBaseline />
         <div className="flex justify-between items-center mb-8">
           <Typography variant="h4" className="text-primary">
             {t('taskManager')}
           </Typography>
           <div>
+          <br />
             <FormControlLabel
               control={
                 <Switch
@@ -98,6 +99,7 @@ const App: React.FC = () => {
             </Button>
           </div>
         </div>
+        <br />
         <Button 
           onClick={openAddModal} 
           variant="contained" 
@@ -106,6 +108,8 @@ const App: React.FC = () => {
         >
           {t('addTask')}
         </Button>
+        <br />
+        <br />
         {loading ? (
           <Typography variant="h6" align="center" color="secondary">{t('loading')}</Typography>
         ) : (

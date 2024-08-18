@@ -19,7 +19,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onTaskClick, onUpdateStatus 
           key={task._id}
           className="cursor-pointer hover:bg-opacity-80 transition duration-200 ease-in-out border border-primary"
         >
-          <CardContent className="flex justify-between items-center">
+          <CardContent className="flex justify-between items-center ">
             <div onClick={() => onTaskClick(task._id)}>
               <Typography variant="h6" color="secondary">{task.title}</Typography>
               <Typography variant="body2" color="textSecondary">

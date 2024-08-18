@@ -6,6 +6,7 @@ export const TaskCard = styled(Card)({
   border: '1px solid #a16be4',
   boxShadow: '0px 0px 10px #a16be4',
   margin: '10px',
+  
 });
 
 export const TaskContent = styled(CardContent)({
