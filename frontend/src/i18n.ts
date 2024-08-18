@@ -30,7 +30,14 @@ const resources = {
       "failedToAddTask": "Failed to add task",
       "failedToUpdateTask": "Failed to update task",
       "failedToDeleteTask": "Failed to delete task",
-      "fillAllFields": "Please fill all required fields"
+      "fillAllFields": "Please fill all required fields",
+      "tip": "Tip: Click on a task to view its content",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode",
+      "language": "Language",
+      "profile": "Profile",
+      "name": "Name",
+      "email": "Email"
     }
   },
   es: {
@@ -61,7 +68,14 @@ const resources = {
       "failedToAddTask": "Error al agregar la tarea",
       "failedToUpdateTask": "Error al actualizar la tarea",
       "failedToDeleteTask": "Error al eliminar la tarea",
-      "fillAllFields": "Por favor, complete todos los campos requeridos"
+      "fillAllFields": "Por favor, complete todos los campos requeridos",
+      "tip": "Consejo: Haz clic en una tarea para ver su contenido",
+      "darkMode": "Modo Oscuro",
+      "lightMode": "Modo Claro",
+      "language": "Idioma",
+      "profile": "Perfil",
+      "name": "Nombre",
+      "email": "Correo electrónico"
     }
   }
 };

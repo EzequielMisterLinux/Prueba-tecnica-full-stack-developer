@@ -1,12 +1,13 @@
-// En src/App.tsx
 import React from 'react';
-import { Container, CssBaseline, Typography, Button, Switch, FormControlLabel } from '@mui/material';
+import { Container, CssBaseline, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useTasks from './hooks/useTasks';
 import TaskList from './components/TaskList';
 import TaskModal from './modals/TaskModal';
 import TaskModalAddUpdate from './modals/TaskModalAddUpdate';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -77,65 +78,51 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      
-      <Container maxWidth="md" className="py-8 m-6">
-        <CssBaseline />
-        <div className="flex justify-between items-center mb-8">
-          <Typography variant="h4" className="text-primary">
+      <CssBaseline />
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Header darkMode={darkMode} setDarkMode={setDarkMode} toggleLanguage={toggleLanguage} />
+        <Container maxWidth="md" style={{ flexGrow: 1, padding: '2rem 0' }}>
+          <Typography variant="h4" gutterBottom>
             {t('taskManager')}
           </Typography>
-          <Typography>
-            Consejo: Click a una tarea para ver su contenido
+          <Typography variant="subtitle1" gutterBottom>
+            {t('tip')}
           </Typography>
-          <div>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={darkMode}
-                  onChange={() => setDarkMode(!darkMode)}
-                  color="primary"
-                />
-              }
-              label={darkMode ? "Dark" : "Light"}
+          <Button 
+            onClick={openAddModal} 
+            variant="contained" 
+            color="primary"
+            style={{ marginBottom: '1rem' }}
+          >
+            {t('addTask')}
+          </Button>
+          {loading ? (
+            <Typography variant="h6" align="center" color="secondary">{t('loading')}</Typography>
+          ) : (
+            <TaskList 
+              tasks={tasks} 
+              onTaskClick={handleOpenTask} 
+              onUpdateStatus={updateTaskStatus}
             />
-            <Button onClick={toggleLanguage} color="primary">
-              {i18n.language === 'en' ? 'ES' : 'EN'}
-            </Button>
-          </div>
-        </div>
-        <Button 
-          onClick={openAddModal} 
-          variant="contained" 
-          color="primary"
-          className="mb-6"
-        >
-          {t('addTask')}
-        </Button>
-        {loading ? (
-          <Typography variant="h6" align="center" color="secondary">{t('loading')}</Typography>
-        ) : (
-          <TaskList 
-            tasks={tasks} 
-            onTaskClick={handleOpenTask} 
-            onUpdateStatus={updateTaskStatus}
+          )}
+          {selectedTask && (
+            <TaskModal
+              task={tasks.find(task => task._id === selectedTask) || null}
+              onClose={handleCloseTask}
+              onDelete={deleteTask}
+              onOpenUpdate={handleOpenUpdateModal}
+            />
+          )}
+          <TaskModalAddUpdate
+            isOpen={isAddModalOpen || isUpdateModalOpen}
+            onClose={isAddModalOpen ? closeAddModal : handleCloseUpdateModal}
+            onSubmit={handleSubmit}
+            task={isUpdateModalOpen ? tasks.find(task => task._id === selectedTask) : undefined}
+            isEditing={isUpdateModalOpen}
           />
-        )}
-        {selectedTask && (
-          <TaskModal
-            task={tasks.find(task => task._id === selectedTask) || null}
-            onClose={handleCloseTask}
-            onDelete={deleteTask}
-            onOpenUpdate={handleOpenUpdateModal}
-          />
-        )}
-        <TaskModalAddUpdate
-          isOpen={isAddModalOpen || isUpdateModalOpen}
-          onClose={isAddModalOpen ? closeAddModal : handleCloseUpdateModal}
-          onSubmit={handleSubmit}
-          task={isUpdateModalOpen ? tasks.find(task => task._id === selectedTask) : undefined}
-          isEditing={isUpdateModalOpen}
-        />
-      </Container>
+        </Container>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 };

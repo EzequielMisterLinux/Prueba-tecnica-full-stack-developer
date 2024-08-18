@@ -1,12 +1,13 @@
-// En src/App.tsx
 import React from 'react';
-import { Container, CssBaseline, Typography, Button, Switch, FormControlLabel } from '@mui/material';
+import { Container, CssBaseline, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useTasks from './hooks/useTasks';
 import TaskList from './components/TaskList';
 import TaskModal from './modals/TaskModal';
 import TaskModalAddUpdate from './modals/TaskModalAddUpdate';
+import Header from './components/Header';
+import Footer from './components/Footer';
 var App = function () {
     var _a = useTranslation(), t = _a.t, i18n = _a.i18n;
     var _b = React.useState(true), darkMode = _b[0], setDarkMode = _b[1];
@@ -54,17 +55,16 @@ var App = function () {
         i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
     };
     return (React.createElement(ThemeProvider, { theme: theme },
-        React.createElement(Container, { maxWidth: "md", className: "py-8 m-6" },
-            React.createElement(CssBaseline, null),
-            React.createElement("div", { className: "flex justify-between items-center mb-8" },
-                React.createElement(Typography, { variant: "h4", className: "text-primary" }, t('taskManager')),
-                React.createElement(Typography, null, "Consejo: Click a una tarea para ver su contenido"),
-                React.createElement("div", null,
-                    React.createElement(FormControlLabel, { control: React.createElement(Switch, { checked: darkMode, onChange: function () { return setDarkMode(!darkMode); }, color: "primary" }), label: darkMode ? "Dark" : "Light" }),
-                    React.createElement(Button, { onClick: toggleLanguage, color: "primary" }, i18n.language === 'en' ? 'ES' : 'EN'))),
-            React.createElement(Button, { onClick: openAddModal, variant: "contained", color: "primary", className: "mb-6" }, t('addTask')),
-            loading ? (React.createElement(Typography, { variant: "h6", align: "center", color: "secondary" }, t('loading'))) : (React.createElement(TaskList, { tasks: tasks, onTaskClick: handleOpenTask, onUpdateStatus: updateTaskStatus })),
-            selectedTask && (React.createElement(TaskModal, { task: tasks.find(function (task) { return task._id === selectedTask; }) || null, onClose: handleCloseTask, onDelete: deleteTask, onOpenUpdate: handleOpenUpdateModal })),
-            React.createElement(TaskModalAddUpdate, { isOpen: isAddModalOpen || isUpdateModalOpen, onClose: isAddModalOpen ? closeAddModal : handleCloseUpdateModal, onSubmit: handleSubmit, task: isUpdateModalOpen ? tasks.find(function (task) { return task._id === selectedTask; }) : undefined, isEditing: isUpdateModalOpen }))));
+        React.createElement(CssBaseline, null),
+        React.createElement("div", { style: { display: 'flex', flexDirection: 'column', minHeight: '100vh' } },
+            React.createElement(Header, { darkMode: darkMode, setDarkMode: setDarkMode, toggleLanguage: toggleLanguage }),
+            React.createElement(Container, { maxWidth: "md", style: { flexGrow: 1, padding: '2rem 0' } },
+                React.createElement(Typography, { variant: "h4", gutterBottom: true }, t('taskManager')),
+                React.createElement(Typography, { variant: "subtitle1", gutterBottom: true }, t('tip')),
+                React.createElement(Button, { onClick: openAddModal, variant: "contained", color: "primary", style: { marginBottom: '1rem' } }, t('addTask')),
+                loading ? (React.createElement(Typography, { variant: "h6", align: "center", color: "secondary" }, t('loading'))) : (React.createElement(TaskList, { tasks: tasks, onTaskClick: handleOpenTask, onUpdateStatus: updateTaskStatus })),
+                selectedTask && (React.createElement(TaskModal, { task: tasks.find(function (task) { return task._id === selectedTask; }) || null, onClose: handleCloseTask, onDelete: deleteTask, onOpenUpdate: handleOpenUpdateModal })),
+                React.createElement(TaskModalAddUpdate, { isOpen: isAddModalOpen || isUpdateModalOpen, onClose: isAddModalOpen ? closeAddModal : handleCloseUpdateModal, onSubmit: handleSubmit, task: isUpdateModalOpen ? tasks.find(function (task) { return task._id === selectedTask; }) : undefined, isEditing: isUpdateModalOpen })),
+            React.createElement(Footer, null))));
 };
 export default App;
