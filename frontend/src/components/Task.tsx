@@ -20,6 +20,7 @@ const Task: React.FC<TaskProps> = ({ id, title, description, completed, onEdit, 
     <TaskCard>
       <TaskContent>
         <div>
+          
           <Typography variant="h6">{title}</Typography>
           <Typography variant="body2">{description}</Typography>
           <Typography variant="caption">Status: {completed ? 'Completed' : 'Pending'}</Typography>

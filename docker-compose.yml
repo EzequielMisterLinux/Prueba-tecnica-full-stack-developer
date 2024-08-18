@@ -1,0 +1,29 @@
+version: '3'
+services:
+  api:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO=mongodb://mongo:27017/taskmanagement
+      - PORT=3000
+      - HOST=0.0.0.0 
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_BACKEND_URL=http://api:3000/tasks 
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

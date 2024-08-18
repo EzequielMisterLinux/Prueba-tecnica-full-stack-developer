@@ -9,7 +9,12 @@ async function bootstrap() {
   const port = configService.get<number>('PORT');
   const host = configService.get<string>('HOST');
 
-  app.enableCors();
+  app.enableCors({
+    origin: `http://localhost:8080` && `http://localhost:5173`,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
+
   await app.listen(port, host, () => {
     console.log(`Application is running on: http://${host}:${port}`);
   });

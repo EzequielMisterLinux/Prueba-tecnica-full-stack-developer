@@ -13,7 +13,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onTaskClick, onUpdateStatus 
   const { t } = useTranslation();
 
   return (
+    
     <div className="space-y-4">
+      
       {tasks.map((task) => (
         <Card
           key={task._id}
@@ -21,6 +23,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onTaskClick, onUpdateStatus 
         >
           <CardContent className="flex justify-between items-center ">
             <div onClick={() => onTaskClick(task._id)}>
+            
               <Typography variant="h6" color="secondary">{task.title}</Typography>
               <Typography variant="body2" color="textSecondary">
                 {t('status')}: {task.completed ? t('completed') : t('pending')}
